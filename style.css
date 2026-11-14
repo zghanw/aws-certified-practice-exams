@@ -36,7 +36,7 @@ h1, h2, h3, p { margin: 0; }
 .ls > * { display: grid; grid-template-columns: 9ch 1fr auto; gap: 0 1.5ch; padding: 5px 6px; }
 .ls a { color: var(--ink); text-decoration: none; }
 .ls a em { font-style: normal; color: var(--green); }
-.ls a:hover, .ls a:focus-visible { background: var(--line); }
+.ls a:hover, .ls a:focus-visible, .ls a:active { background: var(--line); }
 .line { display: flex; align-items: center; margin: 0; }
 .line input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; padding: 4px 0; caret-color: var(--green); }
 .line input::placeholder { color: var(--muted); opacity: 1; }
@@ -44,13 +44,19 @@ h1, h2, h3, p { margin: 0; }
 .opts button { font: inherit; line-height: 1.45; text-align: left; color: var(--ink); background: none; border: 1px solid var(--line); padding: 8px 12px; cursor: pointer; }
 .opts button b { color: var(--green); margin-right: 1ch; }
 .opts button:hover:enabled { border-color: var(--ink); }
+/* Press feedback lands on pointer-down, before the answer is graded on release. */
+.opts button:active:enabled { border-color: var(--ink); background: var(--line); }
 .opts button:disabled { cursor: default; color: var(--muted); }
 .opts button.ok { border-color: var(--green); color: var(--ink); } .opts button.bad { border-color: var(--red); color: var(--ink); }
 /* tmux status bar: the numbered windows are the buttons that run commands */
 .tmux { display: flex; background: var(--green); color: var(--on-green); font-size: .85rem; font-weight: 700; }
 .tmux span, .tmux button { padding: 10px 1ch; }
 .tmux button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-.tmux button:hover, .tmux button:focus-visible { background: var(--on-green); color: var(--green); outline: 0; }
+/* Reverse video again on press and focus. Hover only where there is a real cursor, so it never sticks after a tap. */
+.tmux button:active, .tmux button:focus-visible { background: var(--on-green); color: var(--green); outline: 0; }
+@media (hover: hover) { .tmux button:hover { background: var(--on-green); color: var(--green); } }
+/* tmux marks the current window with a star: the last command run. */
+.tmux .cur::after { content: "*"; }
 .tmux .r { margin-left: auto; }
 /* Boot sequence: index.html adds .js to <html> (unless reduced motion) so nothing is hidden without JavaScript. */
 .js .boot { opacity: 0; }
@@ -63,6 +69,7 @@ h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; margin-b
 .exam { display: grid; grid-template-columns: 10ch 1fr 26ch; gap: 4px 2ch; padding: 18px 1ch; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
 .exam:last-child { border-bottom: 1px solid var(--line); }
 .exam:hover { background: var(--panel); }
+.exam:active { background: var(--line); }
 .exam h3 { font-size: 1rem; }
 .exam p { color: var(--muted); font-size: .92rem; margin-top: 4px; max-width: 58ch; }
 .exam ul { list-style: none; margin: 0; padding: 0; color: var(--muted); font-size: .85rem; }
@@ -76,6 +83,7 @@ h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; margin-b
 details { border-top: 1px solid var(--line); }
 details:last-of-type { border-bottom: 1px solid var(--line); }
 summary { cursor: pointer; padding: 14px 0; font-weight: 700; }
+summary:active { color: var(--green); }
 details p { color: var(--muted); padding: 0 0 16px 2ch; max-width: 70ch; }
 footer { margin-top: 64px; padding: 0 0 40px; color: var(--muted); font-size: .85rem; }
 footer p { border-top: 1px solid var(--line); padding-top: 20px; max-width: 80ch; }
@@ -94,6 +102,9 @@ footer p + p { border: 0; }
   .ls > div > :nth-child(3), .tmux .r { display: none; }
   .tmux button { padding: 12px 1.5ch; }
 }
+/* Finger-sized rows in the listing on touch screens. */
+@media (pointer: coarse) { .ls > a { padding-block: 10px; } }
+@media (prefers-contrast: more) { :root { --muted: #c2cbc5; --line: #6f7a83; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }

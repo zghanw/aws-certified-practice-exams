@@ -35,6 +35,7 @@ if (term) {
     pick = n => {
       pick = null;
       const right = order.indexOf(item.a);
+      navigator.vibrate?.(n === right ? 10 : [10, 60, 10]); // a tap for right, a double tap for wrong, on phones that support it
       [...box.children].forEach((b, i) => { b.disabled = true; if (i === right) b.classList.add('ok'); else if (i === n) b.classList.add('bad'); });
       print(n === right ? '<span class="ok">Correct.</span> ' : '<span class="bad">Not quite.</span> ').append(item.r[order[n]]);
       if (n !== right) print(`<span class="ok">${'ABCD'[right]} is correct.</span> `).append(item.r[item.a]);
@@ -49,6 +50,8 @@ if (term) {
     if (!cmd) return;
     print('<span class="ps">$</span>').append(cmd);
     const [name, arg = ''] = cmd.toLowerCase().split(/\s+/);
+    const wins = [...$('chips').querySelectorAll('button')]; // the status bar stars the window for the last command run
+    if (wins.some(b => b.dataset.c === name)) wins.forEach(b => b.classList.toggle('cur', b.dataset.c === name));
     if (name === 'quiz') return quiz(arg.slice(0, 3));
     if (name === 'ls' || name === 'aws-practice') { const c = ls.cloneNode(true); c.removeAttribute('id'); out.append(c); }
     else if (name === 'open') {
