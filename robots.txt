@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://zghanw.github.io/aws-certified-practice-exams/sitemap.xml
