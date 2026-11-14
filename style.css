@@ -1,17 +1,17 @@
 /* The page is a man page read in a terminal. Direction and rules: DESIGN.md. */
 :root {
   --bg: #0b0d0f; --panel: #111518; --ink: #e3e8e4; --muted: #8b968f; --line: #262d33;
-  --green: #6ee7a0; --on-green: #06120b; --red: #ff8a80;
+  --accent: #6b8cff; --on-accent: #0f1216; --ok: #5bd394; --red: #ff8a80;
   --mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scrollbar-color: var(--line) var(--bg); }
 /* Reverse video, the terminal's own emphasis: the status bar, the headline word, selected text. */
-::selection, mark { background: var(--green); color: var(--on-green); }
+::selection, mark { background: var(--accent); color: var(--on-accent); }
 mark { padding: 0 .12em; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 100%/1.6 var(--mono); -webkit-tap-highlight-color: transparent; }
-a { color: var(--green); text-underline-offset: 3px; }
+a { color: var(--accent); text-underline-offset: 3px; }
 button, a { touch-action: manipulation; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 h1, h2, h3, p { margin: 0; }
@@ -28,33 +28,33 @@ h1, h2, h3, p { margin: 0; }
 .term { border: 1px solid var(--line); background: var(--panel); }
 .screen { padding: 16px; max-height: 70vh; overflow-y: auto; font-size: .95rem; cursor: text; position: relative; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
 .screen p { margin: 0 0 6px; white-space: pre-wrap; overflow-wrap: anywhere; }
-.ps { color: var(--green); font-weight: 700; margin-right: 1ch; }
-.typing::after { content: "▍"; color: var(--green); }
+.ps { color: var(--accent); font-weight: 700; margin-right: 1ch; }
+.typing::after { content: "▍"; color: var(--accent); }
 .dim { color: var(--muted); }
-.ok { color: var(--green); } .bad { color: var(--red); }
+.ok { color: var(--ok); } .bad { color: var(--red); }
 .ls { margin: 4px 0 14px; }
 .ls > * { display: grid; grid-template-columns: 9ch 1fr auto; gap: 0 1.5ch; padding: 5px 6px; }
 .ls a { color: var(--ink); text-decoration: none; }
-.ls a em { font-style: normal; color: var(--green); }
+.ls a em { font-style: normal; color: var(--accent); }
 .ls a:hover, .ls a:focus-visible, .ls a:active { background: var(--line); }
 .line { display: flex; align-items: center; margin: 0; }
-.line input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; padding: 4px 0; caret-color: var(--green); }
+.line input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; padding: 4px 0; caret-color: var(--accent); }
 .line input::placeholder { color: var(--muted); opacity: 1; }
 .opts { display: grid; gap: 6px; margin: 8px 0 10px; }
 .opts button { font: inherit; line-height: 1.45; text-align: left; color: var(--ink); background: none; border: 1px solid var(--line); padding: 8px 12px; cursor: pointer; }
-.opts button b { color: var(--green); margin-right: 1ch; }
+.opts button b { color: var(--accent); margin-right: 1ch; }
 .opts button:hover:enabled { border-color: var(--ink); }
 /* Press feedback lands on pointer-down, before the answer is graded on release. */
 .opts button:active:enabled { border-color: var(--ink); background: var(--line); }
 .opts button:disabled { cursor: default; color: var(--muted); }
-.opts button.ok { border-color: var(--green); color: var(--ink); } .opts button.bad { border-color: var(--red); color: var(--ink); }
+.opts button.ok { border-color: var(--ok); color: var(--ink); } .opts button.bad { border-color: var(--red); color: var(--ink); }
 /* tmux status bar: the numbered windows are the buttons that run commands */
-.tmux { display: flex; background: var(--green); color: var(--on-green); font-size: .85rem; font-weight: 700; }
+.tmux { display: flex; background: var(--accent); color: var(--on-accent); font-size: .85rem; font-weight: 700; }
 .tmux span, .tmux button { padding: 10px 1ch; }
 .tmux button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 /* Reverse video again on press and focus. Hover only where there is a real cursor, so it never sticks after a tap. */
-.tmux button:active, .tmux button:focus-visible { background: var(--on-green); color: var(--green); outline: 0; }
-@media (hover: hover) { .tmux button:hover { background: var(--on-green); color: var(--green); } }
+.tmux button:active, .tmux button:focus-visible { background: var(--on-accent); color: var(--accent); outline: 0; }
+@media (hover: hover) { .tmux button:hover { background: var(--on-accent); color: var(--accent); } }
 /* tmux marks the current window with a star: the last command run. */
 .tmux .cur::after { content: "*"; }
 .tmux .r { margin-left: auto; }
@@ -74,7 +74,7 @@ h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; margin-b
 .exam p { color: var(--muted); font-size: .92rem; margin-top: 4px; max-width: 58ch; }
 .exam ul { list-style: none; margin: 0; padding: 0; color: var(--muted); font-size: .85rem; }
 .exam li b { color: var(--ink); }
-.go { display: block; margin-top: 8px; color: var(--green); font-weight: 700; }
+.go { display: block; margin-top: 8px; color: var(--accent); font-weight: 700; }
 .exam:hover .go { text-decoration: underline; text-underline-offset: 3px; }
 .why { display: grid; grid-template-columns: 14ch 1fr; gap: 14px 2ch; margin-top: 0; margin-bottom: 0; }
 .why dt { font-weight: 700; }
@@ -83,7 +83,7 @@ h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; margin-b
 details { border-top: 1px solid var(--line); }
 details:last-of-type { border-bottom: 1px solid var(--line); }
 summary { cursor: pointer; padding: 14px 0; font-weight: 700; }
-summary:active { color: var(--green); }
+summary:active { color: var(--accent); }
 details p { color: var(--muted); padding: 0 0 16px 2ch; max-width: 70ch; }
 footer { margin-top: 64px; padding: 0 0 40px; color: var(--muted); font-size: .85rem; }
 footer p { border-top: 1px solid var(--line); padding-top: 20px; max-width: 80ch; }
