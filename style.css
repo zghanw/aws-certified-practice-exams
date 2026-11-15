@@ -29,7 +29,7 @@ h1, h2, h3, p { margin: 0; }
 .narrow { max-width: 780px; }
 
 /* ---------- Floating nav: a glass pill the page scrolls under ---------- */
-.nav { position: sticky; top: 12px; z-index: 5; display: flex; align-items: center; gap: 4px; width: fit-content; max-width: calc(100% - 24px); margin: 12px auto 0; padding: 6px 6px 6px 16px; border: 1px solid var(--line); border-radius: 980px; background: var(--glass); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); }
+.nav { position: sticky; top: 12px; z-index: 5; display: flex; align-items: center; gap: 4px; width: fit-content; max-width: calc(100% - 24px); margin: 12px auto 0; padding: 6px 6px 6px 12px; border: 1px solid var(--line); border-radius: 980px; background: var(--glass); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); }
 .nav a { color: var(--ink); text-decoration: none; }
 .brand { display: flex; align-items: center; font-weight: 700; letter-spacing: -.01em; margin-right: 12px; white-space: nowrap; }
 .brand img { margin-right: 8px; }
@@ -119,8 +119,7 @@ h2 span { display: block; color: var(--muted); }
 /* Each exam is tinted with its own badge colour. */
 .exam::before { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 55% at 15% 0%, color-mix(in srgb, var(--tint) 20%, transparent), transparent); pointer-events: none; }
 .exam > * { position: relative; }
-.exam img, .hex { width: 96px; height: auto; margin-bottom: 12px; transition: transform .5s var(--ease); }
-.hex text { font-family: inherit; }
+.exam img { width: 96px; height: auto; margin-bottom: 12px; transition: transform .5s var(--ease); }
 .code { color: var(--muted); font: 600 .875rem ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
 .exam h3 { font-size: 1.375rem; line-height: 1.2; letter-spacing: -.02em; }
 .exam > p:not(.code) { flex: 1; color: var(--muted); font-size: .9375rem; }
@@ -132,7 +131,7 @@ h2 span { display: block; color: var(--muted); }
 .js .exam.in { transition: opacity .7s var(--ease), transform .4s var(--ease), border-color .2s; }
 @media (hover: hover) {
   .exam:hover { transform: translateY(-6px); border-color: color-mix(in srgb, var(--tint) 60%, var(--line)); transition-delay: 0s; }
-  .exam:hover img, .exam:hover .hex { transform: rotate(-5deg) scale(1.06); }
+  .exam:hover img { transform: rotate(-5deg) scale(1.06); }
   .exam:hover .go i { transform: translateX(4px); }
 }
 .exam:active { transform: scale(.985); transition-duration: .1s; transition-delay: 0s; }
