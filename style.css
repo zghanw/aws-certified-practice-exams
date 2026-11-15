@@ -156,10 +156,11 @@ summary { padding: 18px 0; font-size: 1.0625rem; font-weight: 600; cursor: point
 summary:active { color: var(--accent); }
 details p { padding: 0 0 20px; color: var(--muted); max-width: 68ch; }
 
-/* ---------- Footer: small print, then the name set as large as the page allows ---------- */
+/* ---------- Footer: small print, then the name set as large as the page allows ----------
+   The wordmark ignores the pointer: its oversized text box reaches up over the links above it. */
 footer { margin-top: 112px; padding-top: 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: .875rem; overflow: hidden; }
 footer p + p { margin-top: 8px; }
-.mark { margin: 32px 0 -.14em !important; color: var(--line); font-size: clamp(3.5rem, 18.5vw, 17rem); font-weight: 800; line-height: .8; letter-spacing: -.06em; text-align: center; white-space: nowrap; user-select: none; }
+.mark { margin: 32px 0 -.14em !important; color: var(--line); font-size: clamp(3.5rem, 18.5vw, 17rem); font-weight: 800; line-height: .8; letter-spacing: -.06em; text-align: center; white-space: nowrap; user-select: none; pointer-events: none; }
 
 @media (max-width: 900px) {
   .exams { grid-template-columns: 1fr; }
