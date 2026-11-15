@@ -15,10 +15,11 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b0d0f">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0d0f'/%3E%3Cpath d='M7 10l7 6-7 6' fill='none' stroke='%236b8cff' stroke-width='3'/%3E%3Cpath d='M16 23h9' stroke='%23e3e8e4' stroke-width='3'/%3E%3C/svg%3E">
-<!-- Marks that JavaScript runs and motion is allowed, before first paint, so the boot and reveal animations never flash. -->
-<script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
+<!-- Before first paint: pick the theme (saved choice, else the system one) and mark that motion is allowed, so nothing flashes. -->
+<script>{ const d = document.documentElement; let t; try { t = JSON.parse(localStorage.getItem('hub:theme')); } catch {} d.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('js'); }</script>
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -38,83 +39,119 @@
 </script>
 </head>
 <body>
-<div class="wrap">
-<header class="man">
-  <a href="./">AWS-PRACTICE(1)</a>
-  <span aria-hidden="true">Free AWS Practice Exams</span>
-  <span aria-hidden="true">AWS-PRACTICE(1)</span>
+<header class="nav">
+  <a class="brand" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z"/></svg>AWS&nbsp;<span>Practice</span></a>
+  <nav aria-label="Main"><a href="#exams">Exams</a><a href="#why">Why it works</a><a href="#faq">FAQ</a></nav>
+  <button class="icon" id="theme" type="button" aria-label="Dark theme" aria-pressed="false">
+    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  </button>
+  <a class="gh" href="https://github.com/zghanw/aws-certified-practice-exams" target="_blank" rel="noopener" aria-label="Star on GitHub">★<span> Star on GitHub</span></a>
 </header>
 <main>
 <section class="hero">
-  <h1><mark>Free</mark> AWS certification practice exams</h1>
-  <p class="sub">965 original scenario questions across 3 exams. A rationale for every option, timed mock exams, no signup, no ads.</p>
-  <div class="term" id="term">
-    <div class="screen" id="screen">
-      <div id="out">
-        <p><span class="ps">$</span><span id="typed" class="boot">aws-practice ls --free</span></p>
-        <div class="ls" id="ls">
-          <div class="dim boot"><span>CODE</span><span>EXAM</span><span>QUESTIONS</span></div>
-          <a class="boot" data-k="aib" href="https://zghanw.github.io/aws-ai-business-strategist/"><b>AIB-C01</b><span>AI Business Strategist</span><span>340 <em>open →</em></span></a>
-          <a class="boot" data-k="soa" href="https://zghanw.github.io/aws-cloudops-engineer-associate/"><b>SOA-C03</b><span>CloudOps Engineer - Associate</span><span>325 <em>open →</em></span></a>
-          <a class="boot" data-k="scs" href="https://zghanw.github.io/aws-security-specialty/"><b>SCS-C03</b><span>Security - Specialty</span><span>300 <em>open →</em></span></a>
+  <div class="wash" aria-hidden="true"><i></i><i></i></div>
+  <p class="badge w" style="--i:0"><b>Free</b>965 questions · 3 exams · no signup</p>
+  <h1><span class="w" style="--i:1">Free</span> <span class="w" style="--i:2">AWS</span> <span class="w" style="--i:3">practice</span> <span class="w" style="--i:4">exams,</span> <span class="soft"><span class="w" style="--i:5">with</span> <span class="w" style="--i:6">every</span> <span class="w" style="--i:7">answer</span> <span class="w" style="--i:8">explained.</span></span></h1>
+  <p class="sub w" style="--i:10">Original scenario questions for three AWS certifications, timed mock exams, and a rationale for every option. No account, no ads.</p>
+  <div class="cta w" style="--i:12"><a class="btn primary" href="#exams">Pick your exam</a><a class="btn" href="#try">Try a question</a></div>
+  <div class="stage w" style="--i:14">
+    <div class="demo" id="try">
+      <div class="demo-bar">
+        <div class="seg" role="group" aria-label="Sample question from">
+          <button type="button" data-k="aib" aria-pressed="true">AIB-C01</button><button type="button" data-k="soa" aria-pressed="false">SOA-C03</button><button type="button" data-k="scs" aria-pressed="false">SCS-C03</button>
         </div>
-        <p class="dim boot">965 questions · $0 · no signup · no ads</p>
+        <span>Sample question</span>
       </div>
-      <form class="line boot" id="f"><label class="ps" for="in">$</label><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="type quiz to try a real question" aria-label="Terminal command. Try: ls, quiz, open aib, help"></form>
+      <div class="q" id="q" aria-live="polite"><p class="scenario">Turn on JavaScript to try a sample question here, or pick an exam below.</p></div>
     </div>
-    <div class="tmux" id="chips"><span aria-hidden="true">[aws-practice]</span><button type="button" class="cur" data-c="ls" aria-label="Run ls">0:ls</button><button type="button" data-c="quiz" aria-label="Run quiz">1:quiz</button><button type="button" data-c="help" aria-label="Run help">2:help</button><span class="r" aria-hidden="true">965 questions · $0</span></div>
   </div>
 </section>
 
-<section id="exams">
-  <h2>Pick your exam</h2>
-  <div class="body">
-    <a class="exam" href="https://zghanw.github.io/aws-ai-business-strategist/">
-      <b>AIB-C01</b>
-      <div><h3>AWS Certified AI Business Strategist</h3><p>For leaders who decide where AI goes in a business: AI fundamentals, strategy and business value, governance and responsible AI, and transformation.</p></div>
-      <div><ul><li><b>340</b> questions</li><li><b>4</b> domains</li><li><b>85</b>-question mock, 170 min</li></ul><span class="go">Start practicing →</span></div>
+<section id="exams" class="wrap">
+  <h2 class="rv">Three exams. <span>One way to practice.</span></h2>
+  <div class="exams">
+    <a class="exam rv" style="--tint:#e0218a;--i:0" data-k="aib" data-n="340" href="https://zghanw.github.io/aws-ai-business-strategist/">
+      <img src="docs/logos/aib-c01.png" alt="" width="96" height="102" loading="lazy">
+      <p class="code">AIB-C01</p>
+      <h3>AWS Certified AI Business Strategist</h3>
+      <p>For leaders who decide where AI goes in a business: AI fundamentals, strategy and business value, governance and responsible AI, and transformation.</p>
+      <ul><li><b>340</b> questions</li><li><b>4</b> domains</li><li><b>85</b>-question mock, 170 min</li></ul>
+      <span class="go">Start practicing <i>→</i></span>
     </a>
-    <a class="exam" href="https://zghanw.github.io/aws-cloudops-engineer-associate/">
-      <b>SOA-C03</b>
-      <div><h3>AWS Certified CloudOps Engineer - Associate</h3><p>The successor to SysOps Administrator: monitoring and remediation, reliability, deployment and automation, security, and networking.</p></div>
-      <div><ul><li><b>325</b> questions</li><li><b>5</b> domains</li><li><b>65</b>-question mock, 130 min</li></ul><span class="go">Start practicing →</span></div>
+    <a class="exam rv" style="--tint:#2f6bff;--i:1" data-k="soa" data-n="325" href="https://zghanw.github.io/aws-cloudops-engineer-associate/">
+      <img src="docs/logos/soa-c03.png" alt="" width="96" height="105" loading="lazy">
+      <p class="code">SOA-C03</p>
+      <h3>AWS Certified CloudOps Engineer - Associate</h3>
+      <p>The successor to SysOps Administrator: monitoring and remediation, reliability, deployment and automation, security, and networking.</p>
+      <ul><li><b>325</b> questions</li><li><b>5</b> domains</li><li><b>65</b>-question mock, 130 min</li></ul>
+      <span class="go">Start practicing <i>→</i></span>
     </a>
-    <a class="exam" href="https://zghanw.github.io/aws-security-specialty/">
-      <b>SCS-C03</b>
-      <div><h3>AWS Certified Security - Specialty</h3><p>Detection, incident response, infrastructure security, identity and access management, data protection, and governance.</p></div>
-      <div><ul><li><b>300</b> questions</li><li><b>6</b> domains</li><li><b>65</b>-question mock, 170 min</li></ul><span class="go">Start practicing →</span></div>
+    <a class="exam rv" style="--tint:#7a52f4;--i:2" data-k="scs" data-n="300" href="https://zghanw.github.io/aws-security-specialty/">
+      <svg class="hex" viewBox="0 0 96 102" width="96" height="102" aria-hidden="true"><path d="M48 4 89 27.5v47L48 98 7 74.5v-47z" fill="#5a36d6" stroke="#9d86ff" stroke-width="5" stroke-linejoin="round"/><text x="48" y="49" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">Security</text><text x="48" y="65" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700" letter-spacing="1.6">SPECIALTY</text></svg>
+      <p class="code">SCS-C03</p>
+      <h3>AWS Certified Security - Specialty</h3>
+      <p>Detection, incident response, infrastructure security, identity and access management, data protection, and governance.</p>
+      <ul><li><b>300</b> questions</li><li><b>6</b> domains</li><li><b>65</b>-question mock, 170 min</li></ul>
+      <span class="go">Start practicing <i>→</i></span>
     </a>
   </div>
 </section>
 
-<section>
-  <h2>Why these are different</h2>
-  <dl class="why body">
-    <dt>--original</dt><dd><b>Original questions.</b> Written against the public AWS exam guides. No dumps, nothing copied from the real exam or paid courses.</dd>
-    <dt>--rationale</dt><dd><b>A rationale for every option.</b> You learn why the right answer is right and why each wrong answer fails.</dd>
-    <dt>--timed</dt><dd><b>Timed mock exams.</b> Same question count and time limit as the official exam guide.</dd>
-    <dt>--free</dt><dd><b>Free and open source.</b> No signup, no ads. Your progress stays in your browser.</dd>
+<section class="wrap">
+  <dl class="stats">
+    <div class="rv" style="--i:0"><dt data-n="965">965</dt><dd>original questions</dd></div>
+    <div class="rv" style="--i:1"><dt data-n="15">15</dt><dd>exam domains covered</dd></div>
+    <div class="rv" style="--i:2"><dt data-n="3">3</dt><dd>timed mock exams</dd></div>
+    <div class="rv" style="--i:3"><dt>$0</dt><dd>no signup, no ads</dd></div>
   </dl>
 </section>
 
-<section>
-  <h2>Questions people ask</h2>
-  <div class="body">
+<section id="why" class="wrap">
+  <h2 class="rv">Built to teach, <span>not only to score.</span></h2>
+  <div class="bento">
+    <article class="tile wide rv" style="--i:0">
+      <h3>A rationale for every option</h3>
+      <p>You learn why the right answer is right and why each wrong answer fails.</p>
+      <ul class="mini" aria-hidden="true">
+        <li class="right"><b>Install the CloudWatch agent.</b> <em>Correct answer</em><span>EC2 cannot see inside the guest OS, so memory is not a default metric.</span></li>
+        <li class="wrong"><b>Enable detailed monitoring.</b> <em>Your answer</em><span>That only raises the frequency of the default metrics. It adds no memory data.</span></li>
+      </ul>
+    </article>
+    <article class="tile rv" style="--i:1">
+      <h3>Timed mock exams</h3>
+      <p>Same question count and time limit as the official exam guide.</p>
+      <p class="clock" id="clock" aria-hidden="true">170:00</p>
+    </article>
+    <article class="tile rv" style="--i:0">
+      <h3>Original questions</h3>
+      <p>Written against the public AWS exam guides. No dumps, nothing copied from the real exam or paid courses.</p>
+    </article>
+    <article class="tile wide rv" style="--i:1">
+      <h3>Free and open source</h3>
+      <p>No signup, no ads. Your progress stays in your browser, and every question is on GitHub for you to read, check or correct.</p>
+      <a class="btn" href="https://github.com/zghanw/aws-certified-practice-exams" target="_blank" rel="noopener">Read the source</a>
+    </article>
+  </div>
+</section>
+
+<section id="faq" class="wrap narrow">
+  <h2 class="rv">Questions <span>people ask.</span></h2>
   <details><summary>Are these AWS practice exams really free?</summary><p>Yes. Every question, rationale and mock exam is free. There is no account, no ads and no paywall, and the code and questions are open source under the MIT license.</p></details>
   <details><summary>Are these real exam questions or dumps?</summary><p>No. Every question is original and written against the public AWS exam guides. None come from the real exam, paid courses or dumps.</p></details>
   <details><summary>Which exam versions are covered?</summary><p>AWS Certified AI Business Strategist AIB-C01 (beta format), AWS Certified CloudOps Engineer - Associate SOA-C03, and AWS Certified Security - Specialty SCS-C03.</p></details>
   <details><summary>How close are the mock exams to the real exam?</summary><p>Each mock exam uses the question count and time limit from the official exam guide: 85 questions in 170 minutes for AIB-C01 (beta), 65 in 130 minutes for SOA-C03, and 65 in 170 minutes for SCS-C03.</p></details>
   <details><summary>Is my progress saved?</summary><p>Yes, in your own browser only. Your answers are never sent to a server, and clearing site data resets it.</p></details>
   <details><summary>I found a wrong answer. How do I report it?</summary><p>Open an issue on that exam's GitHub repository. Each site links to its repository in the header and footer.</p></details>
-  </div>
-</section>
-<section>
-  <h2>See also</h2>
-  <p class="body"><a href="https://zghanw.github.io/aws-ai-business-strategist/">aib-c01(1)</a>, <a href="https://zghanw.github.io/aws-cloudops-engineer-associate/">soa-c03(1)</a>, <a href="https://zghanw.github.io/aws-security-specialty/">scs-c03(1)</a>, <a href="https://github.com/zghanw/aws-certified-practice-exams" rel="noopener">source(7)</a></p>
 </section>
 </main>
-<footer><p>Unofficial study aid. Not affiliated with or endorsed by AWS. Questions are original, written against the public exam guides. Source on <a href="https://github.com/zghanw/aws-certified-practice-exams" rel="noopener">GitHub</a>.</p><p aria-hidden="true"><mark>(END)</mark></p></footer>
-</div>
+<footer>
+  <div class="wrap">
+    <p>Unofficial study aid. Not affiliated with or endorsed by AWS. Questions are original, written against the public exam guides.</p>
+    <p><a href="https://zghanw.github.io/aws-ai-business-strategist/">AIB-C01</a> · <a href="https://zghanw.github.io/aws-cloudops-engineer-associate/">SOA-C03</a> · <a href="https://zghanw.github.io/aws-security-specialty/">SCS-C03</a> · <a href="https://github.com/zghanw/aws-certified-practice-exams" target="_blank" rel="noopener">GitHub</a></p>
+  </div>
+  <p class="mark" aria-hidden="true">aws practice</p>
+</footer>
 <script src="questions.js" defer></script>
 <script src="app.js" defer></script>
 <!-- Visitor counts by GoatCounter: no cookies, no personal data. -->

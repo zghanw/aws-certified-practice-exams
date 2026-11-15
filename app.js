@@ -1,93 +1,89 @@
 'use strict';
-// index.html's head adds .js to <html> when motion is allowed. Without it everything is simply visible.
-const motion = document.documentElement.classList.contains('js');
+// index.html's head sets data-theme, and adds .js to <html> when motion is allowed.
+const root = document.documentElement;
+const motion = root.classList.contains('js');
 
-// ---------- Terminal hero ----------
-const term = document.getElementById('term');
-if (term) {
-  const $ = id => document.getElementById(id);
-  const out = $('out'), input = $('in'), screen = $('screen'), ls = $('ls');
-  let pick = null; // set while a quiz question is waiting for an answer
+// ---------- Theme: follows the system until the reader picks one, which is then remembered ----------
+const themeBtn = document.getElementById('theme');
+themeBtn.setAttribute('aria-pressed', root.dataset.theme === 'dark');
+themeBtn.addEventListener('click', () => {
+  const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  root.classList.add('theming');
+  root.dataset.theme = theme;
+  themeBtn.setAttribute('aria-pressed', theme === 'dark');
+  try { localStorage.setItem('hub:theme', JSON.stringify(theme)); } catch {}
+  setTimeout(() => root.classList.remove('theming'), 300);
+});
 
-  // html is always our own markup; anything typed by the visitor goes in with append(), which never parses HTML.
-  const print = (html, cls) => { const p = document.createElement('p'); if (cls) p.className = cls; p.innerHTML = html; out.append(p); return p; };
-  const bottom = () => { screen.scrollTop = screen.scrollHeight; };
-  const exam = k => [...ls.querySelectorAll('a')].find(a => a.dataset.k === k);
+// ---------- Live sample question: one real question per exam (questions.js) ----------
+const qEl = document.getElementById('q');
+const tabs = [...document.querySelectorAll('.seg button')];
+const el = (tag, cls, text = '') => { const e = document.createElement(tag); e.className = cls; e.textContent = text; return e; };
 
-  function quiz(k) {
-    const pool = window.QUIZ || [];
-    const item = pool.find(x => x.k === k) || pool[Math.floor(Math.random() * pool.length)];
-    if (!item) return print('quiz: questions failed to load', 'bad');
-    const a = exam(item.k), code = a.firstElementChild.textContent;
-    const order = item.o.map((_, i) => i);
-    for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
-    const head = print(`${code} · sample question`, 'dim');
-    print('').append(item.q);
-    const box = document.createElement('div');
-    box.className = 'opts';
-    order.forEach((oi, n) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.innerHTML = `<b>${'ABCD'[n]}</b>`; b.append(item.o[oi]); b.onclick = () => pick && pick(n);
-      box.append(b);
-    });
-    out.append(box);
-    print('Press A-D or tap an answer.', 'dim');
-    pick = n => {
-      pick = null;
-      const right = order.indexOf(item.a);
-      navigator.vibrate?.(n === right ? 10 : [10, 60, 10]); // a tap for right, a double tap for wrong, on phones that support it
-      [...box.children].forEach((b, i) => { b.disabled = true; if (i === right) b.classList.add('ok'); else if (i === n) b.classList.add('bad'); });
-      print(n === right ? '<span class="ok">Correct.</span> ' : '<span class="bad">Not quite.</span> ').append(item.r[order[n]]);
-      if (n !== right) print(`<span class="ok">${'ABCD'[right]} is correct.</span> `).append(item.r[item.a]);
-      print(`<span class="dim">${parseInt(a.lastElementChild.textContent) - 1} more like this, free:</span> <a href="${a.href}">open ${code} →</a>`);
-      screen.scrollTop = box.offsetTop - 8;
-    };
-    screen.scrollTop = head.offsetTop - 8;
-  }
-
-  function run(raw) {
-    const cmd = raw.trim();
-    if (!cmd) return;
-    print('<span class="ps">$</span>').append(cmd);
-    const [name, arg = ''] = cmd.toLowerCase().split(/\s+/);
-    const wins = [...$('chips').querySelectorAll('button')]; // the status bar stars the window for the last command run
-    if (wins.some(b => b.dataset.c === name)) wins.forEach(b => b.classList.toggle('cur', b.dataset.c === name));
-    if (name === 'quiz') return quiz(arg.slice(0, 3));
-    if (name === 'ls' || name === 'aws-practice') { const c = ls.cloneNode(true); c.removeAttribute('id'); out.append(c); }
-    else if (name === 'open') {
-      const a = exam(arg.slice(0, 3)); // "aib" and "aib-c01" both work
-      if (a) { print(`opening ${a.href} …`, 'dim'); location.href = a.href; } else print('usage: open aib | soa | scs', 'bad');
-    }
-    else if (name === 'help') print('ls            list the exams\nquiz [code]   try one real question (aib, soa, scs)\nopen &lt;code&gt;   go to an exam\nclear         clear the screen', 'dim');
-    else if (name === 'clear') { out.replaceChildren(); pick = null; }
-    else print('', 'bad').append(`command not found: ${name}. Try help.`);
-    bottom();
-  }
-
-  $('f').addEventListener('submit', e => { e.preventDefault(); run(input.value); input.value = ''; });
-  // During a quiz a single A-D keystroke answers straight away.
-  input.addEventListener('input', () => {
-    const n = 'abcd'.indexOf(input.value.toLowerCase());
-    if (pick && input.value.length === 1 && n >= 0) { input.value = ''; pick(n); }
+function show(k) {
+  const item = (window.QUIZ || []).find(x => x.k === k);
+  if (!item) return;
+  tabs.forEach(t => t.setAttribute('aria-pressed', t.dataset.k === k));
+  const card = document.querySelector(`.exam[data-k="${k}"]`), code = card.querySelector('.code').textContent;
+  const cut = item.q.lastIndexOf('\n\n'); // stems are a scenario, a blank line, then the question
+  const order = item.o.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  const list = el('div', 'opts');
+  order.forEach((oi, n) => {
+    const b = el('button', 'opt');
+    b.type = 'button';
+    b.style.setProperty('--i', n);
+    b.append(el('b', '', 'ABCD'[n]), el('span', '', item.o[oi]));
+    b.onclick = () => grade(oi);
+    list.append(b);
   });
-  $('chips').addEventListener('click', e => { if (e.target.tagName === 'BUTTON') run(e.target.dataset.c); });
-  screen.addEventListener('click', e => { if (!e.target.closest('a,button') && !getSelection().toString()) input.focus({ preventScroll: true }); });
+  qEl.replaceChildren(el('p', 'scenario', item.q.slice(0, cut)), el('p', 'ask', item.q.slice(cut + 2)), list);
 
-  // Boot: type the first command, then print the listing line by line. Any key or tap skips it.
-  if (motion) {
-    const boots = [...term.querySelectorAll('.boot')], typed = $('typed'), text = typed.textContent;
-    let i = 0, timer;
-    const show = gap => boots.forEach((b, n) => { b.style.transitionDelay = n * gap + 'ms'; b.classList.add('on'); });
-    const skip = () => { clearTimeout(timer); typed.textContent = text; typed.classList.remove('typing'); show(0); };
-    const tick = () => {
-      typed.textContent = text.slice(0, ++i);
-      if (i < text.length) timer = setTimeout(tick, 45); else { typed.classList.remove('typing'); show(80); }
-    };
-    typed.textContent = '';
-    typed.classList.add('on', 'typing');
-    timer = setTimeout(tick, 400);
-    addEventListener('keydown', skip, { once: true });
-    addEventListener('pointerdown', skip, { once: true });
+  // After an answer every option shows why it is right or wrong, as on the exam sites.
+  function grade(picked) {
+    [...list.children].forEach((b, n) => {
+      const oi = order[n], right = oi === item.a, mine = oi === picked;
+      b.disabled = true;
+      b.style.animation = 'none';
+      if (right) b.classList.add('right'); else if (mine) b.classList.add('wrong');
+      if (right || mine) b.lastChild.append(el('em', '', right && mine ? 'Your answer, correct' : right ? 'Correct answer' : 'Your answer'));
+      b.append(el('span', 'why', item.r[oi]));
+    });
+    navigator.vibrate?.(picked === item.a ? 10 : [10, 60, 10]); // a tap for right, a double tap for wrong, where supported
+    const more = el('p', 'more', `${card.dataset.n - 1} more like this, free. `);
+    const a = el('a', '', `Start ${code} →`);
+    a.href = card.href;
+    more.append(a);
+    qEl.append(more);
   }
 }
+tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.k)));
+show('aib');
 
+// ---------- Mock exam clock on the "Timed mock exams" tile ----------
+const clock = document.getElementById('clock');
+let left = 170 * 60;
+setInterval(() => {
+  left = left ? left - 1 : 170 * 60;
+  clock.textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+}, 1000);
+
+// ---------- Reveal on scroll, and count the numbers up as they arrive ----------
+if (motion) {
+  const count = dt => {
+    const to = +dt.dataset.n, t0 = performance.now();
+    const step = t => {
+      const p = Math.min(1, (t - t0) / 1200);
+      dt.textContent = Math.round(to * (1 - (1 - p) ** 4));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('[data-n]').forEach(count);
+    io.unobserve(e.target);
+  }), { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.rv').forEach(x => io.observe(x));
+}

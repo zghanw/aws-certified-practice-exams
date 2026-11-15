@@ -13,7 +13,7 @@ Free practice questions and timed mock exams for **AWS certification** exams.<br
 
 <br><br>
 
-<img alt="The home page: a terminal listing the three free practice exams" src="docs/screenshots/home.png" width="760">
+<img alt="The home page, with a live sample question and the three free practice exams" src="docs/screenshots/home.png" width="760">
 
 </div>
 
@@ -35,7 +35,7 @@ Each exam has its own practice site and its own repository. This is the home pag
 - Come back to the questions you missed. They're saved in your browser.
 - Use it on a phone or a laptop.
 
-The home page itself is a small terminal. Type `quiz` to try one real question from any exam.
+The home page has a live sample question from each exam, so you can try one before you pick.
 
 ## How the questions are written
 
@@ -59,7 +59,7 @@ Then open http://localhost:8000.
 
 ## Contributing
 
-The questions live in each exam's own repository, and that is where to suggest a question or report a wrong one. This repository holds only the home page. `questions.js` has one sample question per exam for the `quiz` command.
+The questions live in each exam's own repository, and that is where to suggest a question or report a wrong one. This repository holds only the home page. `questions.js` has one sample question per exam for the home page.
 
 If this helped you prepare, a star helps other candidates find it.
 
