@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0d0f'/%3E%3Cpath d='M7 10l7 6-7 6' fill='none' stroke='%236b8cff' stroke-width='3'/%3E%3Cpath d='M16 23h9' stroke='%23e3e8e4' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="icon" href="docs/logo.png">
 <!-- Before first paint: pick the theme (saved choice, else the system one) and mark that motion is allowed, so nothing flashes. -->
 <script>{ const d = document.documentElement; let t; try { t = JSON.parse(localStorage.getItem('hub:theme')); } catch {} d.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('js'); }</script>
 <link rel="stylesheet" href="style.css">
@@ -40,7 +40,7 @@
 </head>
 <body>
 <header class="nav">
-  <a class="brand" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z"/></svg>AWS&nbsp;<span>Practice</span></a>
+  <a class="brand" href="./"><img src="docs/logo.png" alt="" width="25" height="28">AWS&nbsp;<span>Practice</span></a>
   <nav aria-label="Main"><a href="#exams">Exams</a><a href="#why">Why it works</a><a href="#faq">FAQ</a></nav>
   <button class="icon" id="theme" type="button" aria-label="Dark theme" aria-pressed="false">
     <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>

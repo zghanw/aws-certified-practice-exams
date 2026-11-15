@@ -1,5 +1,7 @@
 <div align="center">
 
+<img alt="AWS Certified Practice Exams logo" src="docs/logo.png" width="140">
+
 # AWS Certified Practice Exams
 
 Free practice questions and timed mock exams for **AWS certification** exams.<br>
