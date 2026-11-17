@@ -5,9 +5,9 @@
 # AWS Certified Practice Exams
 
 Free practice questions and timed mock exams for **AWS certification** exams.<br>
-965 original scenario questions across 3 exams, a rationale for every option, no signup, no ads.
+1,165 original scenario questions across 4 exams, a rationale for every option, no signup, no ads.
 
-**[Start practicing](https://zghanw.github.io/aws-certified-practice-exams/)** · [AIB-C01](https://zghanw.github.io/aws-ai-business-strategist/) · [SOA-C03](https://zghanw.github.io/aws-cloudops-engineer-associate/) · [SCS-C03](https://zghanw.github.io/aws-security-specialty/)
+**[Start practicing](https://zghanw.github.io/aws-certified-practice-exams/)** · [AIB-C01](https://zghanw.github.io/aws-ai-business-strategist/) · [SOA-C03](https://zghanw.github.io/aws-cloudops-engineer-associate/) · [SCS-C03](https://zghanw.github.io/aws-security-specialty/) · [SAA-C03](https://zghanw.github.io/aws-solutions-architect-associate/)
 
 <a href="https://zghanw.github.io/aws-certified-practice-exams/"><img alt="Live site" src="https://img.shields.io/website?url=https%3A%2F%2Fzghanw.github.io%2Faws-certified-practice-exams%2F&label=live%20site&up_message=online&down_message=offline"></a>
 <a href="https://github.com/zghanw/aws-certified-practice-exams/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/zghanw/aws-certified-practice-exams"></a>
@@ -15,7 +15,7 @@ Free practice questions and timed mock exams for **AWS certification** exams.<br
 
 <br><br>
 
-<img alt="The home page, with a live sample question and the three free practice exams" src="docs/screenshots/home.png" width="760">
+<img alt="The home page, with a live sample question and the four free practice exams" src="docs/screenshots/home.png" width="760">
 
 </div>
 
@@ -30,6 +30,7 @@ Each exam has its own practice site and its own repository. This is the home pag
 | AWS Certified AI Business Strategist (AIB-C01) | 340 | 85 questions, 170 min | [Start](https://zghanw.github.io/aws-ai-business-strategist/) | [Repo](https://github.com/zghanw/aws-ai-business-strategist) |
 | AWS Certified CloudOps Engineer - Associate (SOA-C03) | 325 | 65 questions, 130 min | [Start](https://zghanw.github.io/aws-cloudops-engineer-associate/) | [Repo](https://github.com/zghanw/aws-cloudops-engineer-associate) |
 | AWS Certified Security - Specialty (SCS-C03) | 300 | 65 questions, 170 min | [Start](https://zghanw.github.io/aws-security-specialty/) | [Repo](https://github.com/zghanw/aws-security-specialty) |
+| AWS Certified Solutions Architect - Associate (SAA-C03) | 200 | 65 questions, 130 min | [Start](https://zghanw.github.io/aws-solutions-architect-associate/) | [Repo](https://github.com/zghanw/aws-solutions-architect-associate) |
 
 - Practice one domain at a time. After each answer, every option shows why it's right or wrong.
 - Take a mock exam with the question count and time limit from the official exam guide.

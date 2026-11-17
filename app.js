@@ -74,7 +74,7 @@ if (motion) {
     const to = +dt.dataset.n, t0 = performance.now();
     const step = t => {
       const p = Math.min(1, (t - t0) / 1200);
-      dt.textContent = Math.round(to * (1 - (1 - p) ** 4));
+      dt.textContent = Math.round(to * (1 - (1 - p) ** 4)).toLocaleString('en-US');
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);

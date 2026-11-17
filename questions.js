@@ -50,5 +50,22 @@ window.QUIZ = [
    "This covers every account, but the security team would work in the management account, which the company does not allow.",
    "A delegated administrator in one Region manages GuardDuty only in that Region, so the other active Regions stay unprotected."
   ]
+ },
+ {
+  "k": "saa",
+  "q": "A company uses one AWS account for development and another AWS account for production. Members of the operations team sign in to the development account as IAM users. The team must be able to start, stop, and reboot Amazon EC2 instances in the production account. The company does not want team members to keep a second set of long-term credentials for the production account.\n\nWhat should a solutions architect do to meet these requirements?",
+  "o": [
+   "In the production account, add an IAM role with EC2 permissions and a trust policy for the development account. Allow the team to assume the role.",
+   "In the development account, add an IAM role with EC2 permissions that name the production instance ARNs. Attach the role to the team's IAM group.",
+   "Create IAM users for the team in the production account with EC2 permissions. Store each user's access key in AWS Secrets Manager in the development account.",
+   "Share the production EC2 instances with the development account by using AWS Resource Access Manager (AWS RAM). Grant the team EC2 permissions in the development account."
+  ],
+  "a": 0,
+  "r": [
+   "A role in the production account holds the EC2 permissions, and its trust policy lets principals from the development account assume it. Team members switch to the role and get temporary credentials, so they keep only their existing sign-in.",
+   "A policy in the development account cannot grant access to resources in another account on its own. The production account must trust the caller, which needs a role or a resource policy in the production account.",
+   "This creates a second set of long-term credentials for each team member, which the company wants to avoid. Storing the keys in Secrets Manager does not change that they are long-term keys.",
+   "AWS RAM shares resources such as subnets and transit gateways. It does not share EC2 instances, so the team would still have no access to the production instances."
+  ]
  }
 ];
