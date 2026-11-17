@@ -36,19 +36,19 @@ window.QUIZ = [
  },
  {
   "k": "scs",
-  "q": "A company has 60 AWS accounts in an organization in AWS Organizations. The company's security team must enable Amazon GuardDuty in every account, including accounts that are created later. The security team must manage findings from a dedicated security tooling account instead of the management account.\n\nWhich solution will meet these requirements with the LEAST operational overhead?",
+  "q": "A company has 60 AWS accounts in an organization in AWS Organizations and creates about five new accounts each month. Amazon GuardDuty is enabled only in the management account today. The security team must enable GuardDuty in every existing and future account in all active Regions, and must review all findings from a dedicated security tooling account. The management account must not be used for daily security operations.\n\nWhich solution will meet these requirements?",
   "o": [
-   "Designate the security tooling account as the GuardDuty delegated administrator. Configure GuardDuty to enable automatically for all accounts in the organization.",
-   "Enable GuardDuty in each account by using an AWS CloudFormation StackSet. Send findings from every account to an Amazon S3 bucket in the security tooling account.",
-   "Enable GuardDuty in the management account. Invite each member account from the management account, and accept each invitation in the member account.",
-   "Create an AWS Lambda function in each account that enables GuardDuty. Run the function from an Amazon EventBridge rule when a new account is created."
+   "From the management account, designate the security tooling account as the GuardDuty delegated administrator in each Region. Set auto-enable to all accounts there.",
+   "From the management account, designate the security tooling account as the GuardDuty delegated administrator in each Region. In that account, set auto-enable to new accounts only.",
+   "Keep the management account as the GuardDuty administrator account. Set auto-enable to all accounts in the organization, and give the security team a role in the management account.",
+   "From the management account, designate the security tooling account as the GuardDuty delegated administrator in the home Region only. In that account, set auto-enable to all accounts."
   ],
   "a": 0,
   "r": [
-   "A GuardDuty delegated administrator manages GuardDuty for the whole organization, and the auto-enable setting turns on GuardDuty for existing and new member accounts. Findings from all members appear in the delegated administrator account, so the management account is not used for daily work.",
-   "StackSets can enable GuardDuty, but findings in an S3 bucket are not a managed multi-account view, and the company must keep the deployment and the bucket working.",
-   "Invitations are the legacy method for accounts outside an organization. Each new account would need a manual invitation, and the management account would hold the findings.",
-   "This is custom code that the company must build and maintain for a feature that GuardDuty provides through its organization settings."
+   "GuardDuty is a Regional service, so the delegated administrator is designated in each Region. The setting that auto-enables all accounts turns on GuardDuty for existing members and for accounts that join later, and all findings appear in the security tooling account.",
+   "The new-accounts-only setting enables GuardDuty for accounts that join later, but it leaves the existing 60 accounts without GuardDuty.",
+   "This covers every account, but the security team would work in the management account, which the company does not allow.",
+   "A delegated administrator in one Region manages GuardDuty only in that Region, so the other active Regions stay unprotected."
   ]
  }
 ];
